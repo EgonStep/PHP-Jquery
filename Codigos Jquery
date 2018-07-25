@@ -1,0 +1,35 @@
+Código para enviar um request (POST) e carregar na mesma página o resultado:
+
+$("form").on("submit", (function(e){
+              e.preventDefault();
+              var userForm = $(this).serialize();
+              $.ajax({  
+                type: "post",  
+                url: "url",
+                data: userForm,
+				        dataType: "text",
+                cache: false,
+              }).done(function() {
+                  $('#div').load("url Destino");
+				          return false;
+             });
+        }));
+ //-----------------------------------------------------------------------------------------------------
+ Código para enviar um request ajax, clicando em um link:
+ 
+  $(".class-link").on("click", (function(e) {
+            e.preventDefault();
+            var href = this.href;
+			      var apagar = confirm('Deseja realmente excluir este registro?');
+            if (apagar){
+                $.ajax({
+                type:"get",
+                url: href,
+              }).done(function(){
+                $('#div').load("url Destino");
+                return false;
+              });	
+            }else{
+              event.preventDefault();
+            }
+        }));
