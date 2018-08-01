@@ -14,6 +14,7 @@ $("form").on("submit", (function(e){
 				          return false;
              });
         }));
+	
  //-----------------------------------------------------------------------------------------------------
  Código para enviar um request ajax, clicando em um link:
  
@@ -33,3 +34,24 @@ $("form").on("submit", (function(e){
               event.preventDefault();
             }
         }));
+	
+//-----------------------------------------------------------------------------------------------------
+Código para ordenar data utilizando o plugin DATATABLES e realizando um select com PHP:
+
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+				"date-br-pre": function ( a ) {
+					var brDatea = a.split('/');
+					return (brDatea[2] + brDatea[1] + brDatea[0]) * 1;
+				},
+
+				"date-br-asc": function ( a, b ) {
+					return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+				},
+
+				"date-br-desc": function ( a, b ) {
+					return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+				}
+			} );
+			
+$('#tarefas-table').DataTable({});
+//-----------------------------------------------------------------------------------------------------
