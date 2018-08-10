@@ -1,4 +1,4 @@
-CÛdigo para enviar um request (POST) e carregar na mesma p·gina o resultado:
+C√≥digo para enviar um request (POST) e carregar na mesma p√°gina o resultado:
 
 	$("form").on("submit", (function(e){
               e.preventDefault();
@@ -17,7 +17,7 @@ CÛdigo para enviar um request (POST) e carregar na mesma p·gina o resultado:
 	
 //-----------------------------------------------------------------------------------------------------
  
-CÛdigo para enviar um request ajax, clicando em um link:
+C√≥digo para enviar um request ajax, clicando em um link:
  
   	$(".class-link").on("click", (function(e) {
             e.preventDefault();
@@ -37,3 +37,13 @@ CÛdigo para enviar um request ajax, clicando em um link:
         }));
 	
 //-----------------------------------------------------------------------------------------------------
+
+    setInterval(function() {
+        $.ajax({
+            type: "GET",
+            url: "ajax_refresh.php",
+            success: function(result) {
+                $('body').html(result);
+            }
+        });
+    }, 3000);
