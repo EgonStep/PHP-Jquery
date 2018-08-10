@@ -1,0 +1,3 @@
+$DataMySQL = $var["data"];
+$alterarData = new DateTime($DataMySQL);
+$data = $alterarData->format('d/m/Y');
