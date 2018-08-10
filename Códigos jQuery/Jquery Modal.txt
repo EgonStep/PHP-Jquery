@@ -1,0 +1,42 @@
+Codigo para chamar um modal e abrir uma pagina externa dentro dele:
+
+	$("a[rel=modal]").on("click",(function(e){
+		e.preventDefault();
+
+		var id = $(this).attr("href2");
+
+		var href = this.href;
+
+		$("#conteudo_modal").load(href);
+
+		var alturaTela = $(document).height();
+		var larguraTela = $(window).width();
+
+		$('#mascara').css({'width':larguraTela,'height':alturaTela});
+		$('#mascara').fadeIn(1000); 
+		$('#mascara').fadeTo("slow",0.8);
+
+		$(id).css({'top':165,'left':458});
+		$(id).show(); 
+	}));
+
+	$("#mascara").on("click",( function(){
+		$(this).hide();
+		$(".window").hide();
+	}));
+
+	$('.fechar').on("click",(function(e){
+		e.preventDefault();
+		$("#mascara").hide();
+		$(".window").hide();
+	}));
+	
+//===== MODAL EM HTML
+
+<div class="table-responsive col-md-4 window" id="janela1">
+		<div id="conteudo_modal">
+		</div>
+		</div>
+		<!-- mascara para cobrir o site -->  
+		<div id="mascara"></div>
+//-----------------------------------------------------------------------------------------------------

@@ -1,0 +1,65 @@
+Código para ordenar data utilizando o plugin DATATABLES e realizando um select com PHP:
+
+			jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+				"date-br-pre": function ( a ) {
+					var brDatea = a.split('/');
+					return (brDatea[2] + brDatea[1] + brDatea[0]) * 1;
+				},
+
+				"date-br-asc": function ( a, b ) {
+					return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+				},
+
+				"date-br-desc": function ( a, b ) {
+					return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+				}
+			} );
+			
+	$('#tarefas-table').DataTable({
+
+		"aoColumns": [
+			null,
+			null,
+			null,
+			{ "sType": "date-br" },
+			null,
+			null
+			],
+	});
+
+/*Os null são os nomes das colunas, e chama a função "date-br" na coluna das datas.*/
+
+//---------------------------------------------------------------->
+
+$('#tarefas-table').DataTable({
+            
+            "language": {
+                "decimal":        "",
+                "emptyTable":     "Tabela sem Dados",
+                "info":           "Total de _TOTAL_ *nome*",
+                "infoEmpty":      "Mostrando 0 de 0 de 0 resultados",
+                "infoFiltered":   "(filtrado de _MAX_ entradas totais)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Mostrar _MENU_ *nome* por página",
+                "loadingRecords": "Carregando...",
+                "processing":     "Processando...",
+                "search":         "Buscar *nome*:",
+                "zeroRecords":    "Dados não encontrados",
+                "paginate": {
+                    "first":      "Primeiro",
+                    "last":       "Ultimo",
+                    "next":       "Próximo",
+                    "previous":   "Anterior"
+                },
+                "aria": {
+                    "sortAscending":  ": Ordenação Ascendente",
+                    "sortDescending": ": Ordenação Descendente"
+                }
+            },
+			"order": [
+                [ 3, "asc" ]
+            ],		
+
+        });
+//---------------------------------------------------------------->
