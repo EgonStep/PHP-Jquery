@@ -1,0 +1,13 @@
+<script type="text/javascript">
+$(document).on('ready', function(){
+    setInterval(function() {
+        $.ajax({
+            type: "GET",
+            url: "ajax_refresh.php",
+            success: function(result) {
+                $('body').html($result);
+            }
+        });
+    }, 3000);
+});
+</script>
