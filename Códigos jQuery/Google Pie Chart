@@ -1,0 +1,25 @@
+Criar um evento de click no grafico de pizza (função dentro da drawChart)
+
+function drawChart() {
+
+  var data = google.visualization.arrayToDataTable([
+
+            ['Coluna 1', 'Coluna 2', 'link'],
+            ['$row[base]', $row[tamanho], 'relatorios/sql-server/evolucaoDataBases.php?db=$row[base]'],
+    ]);
+  
+    function selectHandler(){
+        var selection = chart.getSelection();
+          if (selection.length > 0) {
+            var link = data.getValue(selection[0].row, 2);
+            $("#conteudo").load(link);
+          }
+      }
+
+      google.visualization.events.addListener(chart, 'select', selectHandler);
+
+      chart.draw(data, options);
+      
+	  }
+    
+ ==============================================================>
