@@ -1,3 +1,25 @@
+<?php // Metodo mais seguro para enviar dados pro banco
+
+  require_once 'login.php';
+  $conn = new mysqli($hn, $un, $pw, $db);
+  if ($conn->connect_error) die("Fatal Error");
+  
+  $stmt = $conn->prepare('INSERT INTO classics VALUES(?,?,?,?,?)');
+  $stmt->bind_param('sssss', $author, $title, $category, $year, $isbn);
+  
+  $author = 'Emily Brontë';
+  $title = 'Wuthering Heights';
+  $category = 'Classic Fiction';
+  $year = '1847';
+  $isbn = '9780553212587';
+  $stmt->execute();
+  
+  printf("%d Row inserted.\n", $stmt->affected_rows);
+  $stmt->close();
+  $conn->close();
+?>
+
+
 <?php
 
   $conn = new mysqli($hn, $un, $pw, $db);
@@ -9,6 +31,26 @@
   
   // Etc.
   //Função fix_string é utilizada para evitar input maliciosos do user
+function mysql_fix_string($conn, $string){
+  if (get_magic_quotes_gpc()) $string = stripslashes($string);
+  return $conn->real_escape_string($string);
+}
+?>
+
+<?php // Função para prevenir contra SQL e XSS ataques
+
+require_once 'login.php';
+$conn = new mysqli($hn, $un, $pw, $db);
+if ($conn->connect_error) die("Fatal Error");
+
+  $user = mysql_entities_fix_string($conn, $_POST['user']);
+  $pass = mysql_entities_fix_string($conn, $_POST['pass']);
+  $query = "SELECT * FROM users WHERE user='$user' AND pass='$pass'";
+  // Etc.
+
+function mysql_entities_fix_string($conn, $string){
+  return htmlentities(mysql_fix_string($conn, $string));
+}
 function mysql_fix_string($conn, $string){
   if (get_magic_quotes_gpc()) $string = stripslashes($string);
   return $conn->real_escape_string($string);
