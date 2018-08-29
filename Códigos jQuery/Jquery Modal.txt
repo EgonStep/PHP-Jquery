@@ -40,3 +40,14 @@ Codigo para chamar um modal e abrir uma pagina externa dentro dele:
 		<!-- mascara para cobrir o site -->  
 		<div id="mascara"></div>
 //-----------------------------------------------------------------------------------------------------
+
+Chamar um popover
+
+<td style='text-align: center;'><a href='#' data-toggle='popover' 
+            data-content="<a href2='#janela1' data-toggle='modal' data-target='#janela1' href='projetos.php?idFim=$idTarefa' 
+                type='button' class='btn btn-success btn-sm link-modal'>Concluir</a>
+
+                <a href='projetos.php?idCancel=$idTarefa' href2='#janela1' data-toggle='modal' data-target='#janela1'
+                type='button' class='btn btn-danger btn-sm link-modal'>Cancelar</a>">
+
+                <img src=images.png></a></td>
