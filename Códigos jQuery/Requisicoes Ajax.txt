@@ -14,7 +14,25 @@ Código para enviar um request (POST) e carregar na mesma página o resultado:
 				          return false;
              });
         }));
+//-----------------------------------------------------------------------------------------------------
+
+Abrir a resposta apos POST de um form, por exemplo, abrir em um modal a resposta:
+$("form").on ("submit", (function(e){
+              e.preventDefault();
+              var userForm = $(this).serialize();
+              $.ajax({  
+                type: "post",  
+                url: "projetos.php",
+                data: userForm,
+                cache: false,
+              }).done(function(data) {
+                  $('#conteudo_modal').html(data);
+                  return false;
+             });
+        }));
 	
+/*html(data) para pegar a resposta
+
 //-----------------------------------------------------------------------------------------------------
  
 Código para enviar um request ajax, clicando em um link:
