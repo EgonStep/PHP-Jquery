@@ -14,7 +14,8 @@ Código para enviar um request (POST) e carregar na mesma página o resultado:
 				          return false;
              });
         }));
-//-----------------------------------------------------------------------------------------------------
+//=============================================================================================================
+
 
 Abrir a resposta apos POST de um form, por exemplo, abrir em um modal a resposta:
 $("form").on ("submit", (function(e){
@@ -33,7 +34,8 @@ $("form").on ("submit", (function(e){
 	
 /*html(data) para pegar a resposta
 
-//-----------------------------------------------------------------------------------------------------
+//=============================================================================================================
+
  
 Código para enviar um request ajax, clicando em um link:
  
@@ -54,7 +56,8 @@ Código para enviar um request ajax, clicando em um link:
             }
         }));
 	
-//-----------------------------------------------------------------------------------------------------
+//=============================================================================================================
+
 
     setInterval(function() {
         $.ajax({
@@ -65,3 +68,46 @@ Código para enviar um request ajax, clicando em um link:
             }
         });
     }, 3000);
+    
+//=============================================================================================================
+
+Abrir um tooltip de um modal, recarrega-lo, apos requisição, e no form, recarregar o modal novo com as informações e atualizar
+o antigo modal.
+
+$('[data-toggle="popover"]').popover({
+            html:true,
+            trigger: 'focus',
+        });
+        $('[data-toggle="popover"]').on('shown.bs.popover', function (e) {
+            $(".linkPops").on("click",(function(e){
+                e.preventDefault();
+                var href = this.href;
+                var idPrj = href.split("=").pop();
+                $.ajax({  
+                    type: "get",  
+                    url: href,
+                    cache: false,
+                }).done(function() {
+                    $("#conteudo_modal5").load("projetos.php?idProject=" + idPrj)
+                    return false;
+                });
+            }));
+        });
+	
+//=========================================
+
+        $("form").on ("submit", (function(e){
+              e.preventDefault();
+              var userForm = $(this).serialize();
+              var idPrj = $('.inputForm').val();
+              $.ajax({  
+                type: "post",  
+                url: "projetos/nome.php",
+                data: userForm,
+                cache: false,
+              }).done(function(data) {
+                  $("#conteudo_modal5").load("projetos.php?idProject=" + idPrj)
+                  $('#conteudo_modal').html(data);
+                  return false;
+             });
+        }));
