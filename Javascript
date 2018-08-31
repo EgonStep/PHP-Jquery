@@ -1,1 +1,36 @@
 
+/*Manuseando propriedades dos objetos javascript
+Todas as funções têm uma propriedade "prototype", 
+projetada para conter propriedades e métodos que 
+não são replicados em quaisquer objetos criados a 
+partir de uma classe. Em vez disso, eles são passados 
+​​para seus objetos por referência.
+*/
+String.prototype.nbsp = function(){
+    return this.replace(/ /g, '=')
+}
+document.write("the quick brown fox".nbsp())
+// Resultado esperado: the=quick=brown=fox
+
+//Manuseando Objetos ou Associative Array
+balls = {
+    "golf": "Golf balls, 6",
+    "tennis": "Tennis balls, 3",
+    "soccer": "Soccer ball, 1",
+    "ping": "Ping Pong balls, 1 doz"
+}
+for (dado in balls){
+    document.write(dado + " = " + balls[dado] + "<br>")
+}
+
+/*Resultado esperado:
+    Golf balls, 6
+    tennis = Tennis balls, 3
+    soccer = Soccer ball, 1
+    ping = Ping Pong balls, 1 doz
+*/
+
+// Ascending numeric sort
+numbers = [7, 23, 6, 74]
+numbers.sort(function(a,b){return a - b})
+document.write(numbers + "<br>")
