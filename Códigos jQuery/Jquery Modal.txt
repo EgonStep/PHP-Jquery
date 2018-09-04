@@ -51,3 +51,13 @@ Chamar um popover
                 type='button' class='btn btn-danger btn-sm link-modal'>Cancelar</a>">
 
                 <img src=images.png></a></td>
+
+//-----------------------------------------------------------------------------------------------------
+
+Quando precisar utilizar dois modais, fechando o modal filho, não afetará o scroll-y do primeiro modal.
+
+$('.modal').on("hidden.bs.modal", function (e) { 
+        	if ($('.modal:visible').length) { 
+            	$('body').addClass('modal-open'); 
+        	}
+    	});
