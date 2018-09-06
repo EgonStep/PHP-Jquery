@@ -41,6 +41,12 @@ function O(i)
 return typeof i == 'object' ? i : document.getElementById(i)
 }
 
+//Funcao para retornar um objeto com classe
+function C(i)
+{
+return document.getElementsByClassName(i)
+}
+
 //E para estilizar com css via javascript
 function S(i)
 {
