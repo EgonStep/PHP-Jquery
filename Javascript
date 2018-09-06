@@ -34,3 +34,20 @@ for (dado in balls){
 numbers = [7, 23, 6, 74]
 numbers.sort(function(a,b){return a - b})
 document.write(numbers + "<br>")
+//========================================================================================//
+//Função para retornar um objeto ou ID do DOM
+function O(i)
+{
+return typeof i == 'object' ? i : document.getElementById(i)
+}
+
+//E para estilizar com css via javascript
+function S(i)
+{
+return O(i).style
+}
+//Ex
+<div id='myobj'>Some text</div>
+<script>
+O('myobj').style.color = 'green'
+</script>
