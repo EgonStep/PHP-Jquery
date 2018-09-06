@@ -1,0 +1,53 @@
+//Parametros do Construtor
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db->setAttribute(PDO::ATTR_CASE, PDO::CASE_UPPER);
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+$db = new PDO('mysql:host=localhost;dbname=base', 'usuario', 'senha');
+
+//Para Insert/Delete/Update no BD
+//1 - passo
+$sql = 'INSERT INTO tabela (c1,c2,c3) VALUES(?,?,?)';
+//2 - passo
+$stmt = $db->prepare($sql);
+//3 - passo é aqui é o array(...), 4 - passo é chamada de execute()
+if($stmt->execute(array('valor1', 'valor2', 3)) === false){
+    print_r($stmt->errorInfo());
+}else{
+    echo 'insert realizado com sucesso';
+}
+
+//Outro metodo para Insert/Delete/Update
+$stmt = $dbh->prepare("INSERT INTO REGISTRY (name, value) VALUES (?, ?)");
+$stmt->bindParam(1, $name);
+$stmt->bindParam(2, $value);
+// insert one row
+$name = 'one';
+$value = 1;
+$stmt->execute();
+
+// insert another row with different values
+$name = 'two';
+$value = 2;
+$stmt->execute();
+
+//Para Select
+//1 - passo
+$sql = 'SELECT * FROM tabela WHERE c = :v1 AND c2 = :v2';
+//2 - passo    
+$stmt = $db->prepare($sql);
+//3 - passo
+$stmt->bindValue(':v1', 10);
+$stmt->bindValue(':v2', 'janeiro');
+//4 - passo
+$stmt->execute();
+//5 - passo
+$itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//Outro método para Select
+$stmt = $dbh->prepare("SELECT * FROM REGISTRY where name = ?");
+if ($stmt->execute(array($_GET['name']))) {
+  while ($row = $stmt->fetch()) {
+    print_r($row);
+  }
+}
