@@ -1,0 +1,19 @@
+<?php
+//Date Functions MySQL
+SELECT CURDATE(); //retorna a data atual
+SELECT DATE('1961-05-02 14:56:23'); //retorna 1961-05-02
+SELECT DATE_ADD('1975-01-01', INTERVAL 77 DAY); //retorna 1975-03-19
+SELECT '2018-12-31 23:59:59' + INTERVAL 1 SECOND;//retorna 2019-01-01 00:00:00
+SELECT DATE_FORMAT('2018-05-04 03:02:01', '%W %M %D %Y %h:%i %p'); //retorna Friday May 4th 2018 03:02AM
+SELECT DAY('2018-02-03');//retorna 3
+SELECT DAYNAME('2018-02-03');//retorna Sabado
+SELECT DAYOFWEEK('2018-02-03');//retorna 7
+SELECT SYSDATE();//retorna a data exata da função chamada
+
+//Time Functions MySQL
+SELECT CURTIME();//retorna hora:min:seg atuais
+SELECT TIMEDIFF('2000-01-01 01:02:03', '1999-12-31 23:24:25');//retorna 01:37:38
+SELECT UNIX_TIMESTAMP('2000-01-01');//retorna 946684800
+SELECT FROM_UNIXTIME(946684800, '%W %M %D %Y %h:%i %p');//retorna Saturday January 1st 2000 12:00 AM
+
+?>
