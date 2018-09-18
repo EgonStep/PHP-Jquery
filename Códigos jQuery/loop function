@@ -1,0 +1,11 @@
+var $elements = $(".checklist").children()
+function anim_loop(index) {
+    $elements.eq(index).fadeIn(1000, function() {
+        var $self = $(this);
+        setTimeout(function() {
+            $self.fadeOut(1000);
+            anim_loop((index + 1) % $elements.length);
+        }, 3000);
+    });
+}
+anim_loop(0);
