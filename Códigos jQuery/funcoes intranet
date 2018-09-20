@@ -1,0 +1,79 @@
+$(function(){
+    
+    function dataHora()
+    {
+    moment.locale("pt-br");  
+    $("#hora-atual").text(moment().format('LLLL'));     
+    }
+    setInterval(dataHora, 1000);
+
+    function anim_loop(index, name) {
+        var elements = $(name).children()
+        elements.eq(index).fadeIn(1000, function() {
+            var self = $(this);
+            setTimeout(function() {
+                self.fadeOut(1000);
+                anim_loop(((index + 1) % elements.length), name);
+            }, 3000);
+        });
+    }                  
+
+    anim_loop(0, $(".checklist"));
+
+    $(".link-modal").on("click", function(e){
+        e.preventDefault();
+        var href = this.href;
+        $.ajax({
+            url: href,
+            context: document.body
+        }).done(function() {
+            $("#janela1").modal();
+            $(".modal-body").load(href);
+        });
+    });
+
+    var delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+    
+    $("#buscar-ramal").on("keyup", function(){
+        query = $(this).val()
+        delay(function(){
+            if(query != ""){
+                $.ajax({
+                    url: "Ramais",
+                    method: "GET",
+                    data: {
+                        query:query
+                    },
+                    beforeSend: function(){
+                        $('[data-toggle="popover"]').popover('dispose')
+                    },
+                    success:function(data){
+                        $('[data-toggle="popover"]').popover({
+                            placement: 'left',
+                            html: true,
+                            content: data,
+                            boundary: 'viewport'                                    
+                        })                               
+                    }
+                }).done(function(){
+                    $('[data-toggle="popover"]').popover('show')
+                })
+            } else {
+                $('[data-toggle="popover"]').popover('dispose')
+            }
+        },200)            
+    });
+
+    $(document).mouseup(function (e){
+        var container = $('[role="tooltip"]');
+        if (!container.is(e.target) && container.has(e.target).length === 0){
+            container.popover("hide");
+        }
+    });
+});
