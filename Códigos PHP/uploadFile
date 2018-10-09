@@ -1,0 +1,37 @@
+if (isset($_FILES['file']['name'])){
+
+  $saveto = $_FILES["file"]["name"];
+  move_uploaded_file($_FILES["file"]["tmp_name"],"upload/".$saveto);
+  $typeok = TRUE;
+
+  switch($_FILES['file']['type']){
+    case "upload/gif": $src = imagecreatefromgif($saveto); break;
+    case "upload/jpeg":
+      case "upload/pjpeg": $src = imagecreatefromjpeg($saveto); break;
+    case "upload/png": $src = imagecreatefrompng($saveto); break;
+    default: $typeok = FALSE; break;
+  }
+  if ($typeok){
+  
+    $filename = $saveto;
+    list($width, $height) = getimagesize($filename);
+    $imageratio = $width/$height;
+
+    if($imageratio >= 1){
+        $newwidth = 600;
+        $newheight = 600 / $imageratio; 
+    }
+    else {
+        $newwidth = 400;
+        $newheight = 400 / $imageratio;
+    }
+
+    $tmp = imagecreatetruecolor($newwidth, $newheight);
+    imagecopyresampled($tmp, $src, 200, 200, 100, 100, $newwidth, $newheight, $width, $height);
+    imageconvolution($tmp, array(array(-1, -1, -1),
+    array(-1, 16, -1), array(-1, -1, -1)), 8, 0);
+    imagejpeg($tmp, $saveto);
+    imagedestroy($tmp);
+    imagedestroy($src);
+  }
+}
