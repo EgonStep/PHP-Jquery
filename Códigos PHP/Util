@@ -1,0 +1,8 @@
+Acessar mes e ano de um date object sql
+$row['data']->format('m-Y');
+
+foreach com mais de um array
+foreach ($fechamentoCount as $dado=>$key){
+				$backlog = $key - $aberturaCount[$dado];
+				echo "[$dado, $aberturaCount[$dado], $key, $backlog],";
+			}
