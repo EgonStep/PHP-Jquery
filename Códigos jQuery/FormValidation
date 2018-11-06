@@ -47,11 +47,11 @@ $(document).ready(function () {
               var userForm = $(this).serialize();
               $.ajax({  
                 type: "post",  
-                url: "usuarios/gerenciar/criarForm.php",
+                url: "url",
                 data: userForm,
                 cache: false,
               }).done(function(data) {
-                  $('#conteudo').load("usuarios/gerenciar/criar.php");
+                  $('#conteudo').load("");
 				  $("#janela1").modal("toggle");
 				  $('#conteudo_modal').html(data);
 				  return false;
