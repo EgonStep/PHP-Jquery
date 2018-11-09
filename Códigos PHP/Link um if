@@ -1,0 +1,21 @@
+if(isset($_GET['cam0'])){
+	$cam0 = strip_tags($_GET['cam0']);
+	$camArray = explode(",", $cam0);
+	
+	$folders = $adldap->folder_list($camArray, ADLDAP_FOLDER, false);
+	foreach($folders as $values => $key){
+		if(!empty($key['dn'])){
+			$var = $key['dn'];
+			$var2 = explode(",",$var);
+			$var3 = substr($var2[0],3);
+			$objectClass = $key['objectclass'];
+			
+			if($objectClass[1] == "organizationalUnit"){
+				echo "<li><a class='list' href='page.php?cam0=$var3,$cam0'>$var3</a></li>";
+			} else if($objectClass[3] == "user" || $objectClass[1] == "group"){
+				echo "<li><a class='list' href='page.php?person=$var3,$cam0'>$var3</a></li>";
+			}
+		}
+	}
+	
+}
