@@ -134,18 +134,20 @@ $("form").on("submit", function(e){
 
 Treeview usando jquery, abrindo novas requisições no link clicado
 
-$(function(){
-	$('.list').on("click", function(e){
-		e.preventDefault()
-		if (e.target) {
-			var href = e.target.href
-			$.ajax(href).done(function(data) {
-				if($(e.target).has("ul").length == false){
-					$(e.target).append("<ul>" + data + "</ul>")
-				} else {
-					$(e.target).children().remove()
-				}
-			})
-		}
-	})
+$('.list').on("click", function(e){
+	e.preventDefault()
+	//Prevenir o clique na area da 'li'
+	if($(e.target).is("li")){
+		return
+	}
+	if (e.target){
+		var href = e.target.href
+		$.ajax(href).done(function(data) {
+			if($(e.target).has("ul").length == false){
+				$(e.target).append(data)
+			} else {
+				$(e.target).children().remove()
+			}
+		})
+	}			
 })
