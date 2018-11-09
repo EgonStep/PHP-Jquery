@@ -1,134 +1,151 @@
 Código para enviar um request (POST) e carregar na mesma página o resultado:
 
-	$("form").on("submit", (function(e){
-              e.preventDefault();
-              var userForm = $(this).serialize();
-              $.ajax({  
-                type: "post",  
-                url: "url",
-                data: userForm,
-				        dataType: "text",
-                cache: false,
-              }).done(function() {
-                  $('#div').load("url Destino");
-				          return false;
-             });
-        }));
+$("form").on("submit", (function(e){
+	e.preventDefault()
+      $.ajax({
+	type: $(this).attr("method"),  
+        url: $(this).attr("action"),
+	data: $(this).serialize(),
+      }).done(function(data) {
+      	$('#div').load(data);
+	return false;
+     });
+}));
 //=============================================================================================================
 
 
 Abrir a resposta apos POST de um form, por exemplo, abrir em um modal a resposta:
 $("form").on ("submit", (function(e){
-              e.preventDefault();
-              var userForm = $(this).serialize();
-              $.ajax({  
-                type: "post",  
-                url: "projetos.php",
-                data: userForm,
-                cache: false,
-              }).done(function(data) {
-                  $('#conteudo_modal').html(data);
-                  return false;
-             });
-        }));
+      e.preventDefault();
+      var userForm = $(this).serialize();
+      $.ajax({  
+	type: "post",  
+	url: "projetos.php",
+	data: userForm,
+	cache: false,
+      }).done(function(data) {
+	  $('#conteudo_modal').html(data);
+	  return false;
+     });
+}));
 	
 /*html(data) para pegar a resposta
 
 //=============================================================================================================
 
- 
 Código para enviar um request ajax, clicando em um link:
  
-  	$(".class-link").on("click", (function(e) {
-            e.preventDefault();
-            var href = this.href;
-			      var apagar = confirm('Deseja realmente excluir este registro?');
-            if (apagar){
-                $.ajax({
-                type:"get",
-                url: href,
-              }).done(function(){
-                $('#div').load("url Destino");
-                return false;
-              });	
-            }else{
-              event.preventDefault();
-            }
-        }));
+$(".class-link").on("click", (function(e) {
+	e.preventDefault();
+    	var href = this.href;
+	var apagar = confirm('Deseja realmente excluir este registro?');
+    	if (apagar){
+		$.ajax({
+			type:"get",
+			url: href,
+      		}).done(function(data){
+			$('#div').load(data);
+			return false;
+      		});	
+    	}else{
+      		e.preventDefault();
+    	}
+}));
 	
 //=============================================================================================================
 
+Intervalo para requisição
 
-    setInterval(function() {
-        $.ajax({
-            type: "GET",
-            url: "ajax_refresh.php",
-            success: function(result) {
-                $('body').html(result);
-            }
-        });
-    }, 3000);
+setInterval(function() {
+	$.ajax({
+    		type: "GET",
+    		url: "page.php",
+    		success: function(data) {
+			$('body').html(data);
+    		}
+	});
+}, 3000);
     
 //=============================================================================================================
 
-Abrir um tooltip de um modal, recarrega-lo, apos requisição, e no form, recarregar o modal novo com as informações e atualizar
-o antigo modal.
+Abrir tooltip no modal e após requisição, atualiza-lo com novas informações
 
 $('[data-toggle="popover"]').popover({
-            html:true,
-            trigger: 'focus',
-        });
-        $('[data-toggle="popover"]').on('shown.bs.popover', function (e) {
-            $(".linkPops").on("click",(function(e){
-                e.preventDefault();
-                var href = this.href;
-                var idPrj = href.split("=").pop();
-                $.ajax({  
-                    type: "get",  
-                    url: href,
-                    cache: false,
-                }).done(function() {
-                    $("#conteudo_modal5").load("projetos.php?idProject=" + idPrj)
-                    return false;
-                });
-            }));
-        });
+	html:true,
+	trigger: 'focus',
+});
+$('[data-toggle="popover"]').on('shown.bs.popover', function (e) {
+	$(".linkPops").on("click",(function(e){
+	e.preventDefault();
+	var href = this.href;
+	var id = href.split("=").pop();
+	$.ajax({  
+		type: "get",  
+	    	url: href,
+	    	cache: false,
+	}).done(function() {
+	    	$("#div").load("page.php?id=" + id)
+	    	return false;
+	});
+    }));
+});
 	
-//=========================================
+//=============================================================================================================
 
-        $("form").on ("submit", (function(e){
-              e.preventDefault();
-              var userForm = $(this).serialize();
-              var idPrj = $('.inputForm').val();
-              $.ajax({  
-                type: "post",  
-                url: "projetos/nome.php",
-                data: userForm,
-                cache: false,
-              }).done(function(data) {
-                  $("#conteudo_modal5").load("projetos.php?idProject=" + idPrj)
-                  $('#conteudo_modal').html(data);
-                  return false;
-             });
-        }));
-//=========================================
-Request e atualizar popover com nova informação
+Form com requisições em dois modals
+
+$("form").on ("submit", (function(e){
+	e.preventDefault();
+      	var id = $('.inputForm').val();
+      	$.ajax({  
+		type: $(this).attr("method"),  
+        	url: $(this).attr("action"),
+		data: $(this).serialize(),
+		cache: false,
+      }).done(function(data) {
+      		$("#modal_body2").load("page.php?id=" + id)
+	  	$('#modal_body1').html(data);
+	  	return false;
+     });
+}));
+//=============================================================================================================
+
+Form de cadastro para enviar apenas se a senha antiga for diferente da nova
 
 $("form").on("submit", function(e){
-        e.preventDefault()
-        var senha = $("#nSenha").val()
-        var confirma = $("#conf").val()
-        if(confirma != senha){
-            $("#trocar-senha").attr("data-content", "Senhas são iguais!");
-			$('[data-toggle="popover"]').popover("show");
-        } else {
-            $.ajax({  
-                type: $(this).attr("method"),  
-                url: $(this).attr("action"),
-                data: $(this).serialize(),
-            }).done(function(data) {
-                $("#trocar-senha").attr("data-content", data);
-				$('[data-toggle="popover"]').popover("show");
-            });
-        }
-    })
+	e.preventDefault()
+	var senha = $("#nSenha").val()
+	var confirma = $("#conf").val()
+	if(confirma != senha){
+    		$("#trocar-senha").attr("data-content", "Senhas são iguais!")
+		$('[data-toggle="popover"]').popover("show")
+	} else {
+    		$.ajax({  
+			type: $(this).attr("method"),  
+			url: $(this).attr("action"),
+			data: $(this).serialize(),
+    		}).done(function(data) {
+			$("#trocar-senha").attr("data-content", data)
+			$('[data-toggle="popover"]').popover("show")
+    		});
+	}
+})
+//=============================================================================================================
+
+Treeview usando jquery, abrindo novas requisições no link clicado
+
+$(function(){
+	$('.list').on("click", function(e){
+		e.preventDefault()
+		if (e.target) {
+			var href = e.target.href
+			$.ajax(href).done(function(data) {
+				if($(e.target).has("ul").length == false){
+					$(e.target).append("<ul>" + data + "</ul>")
+				} else {
+					$(e.target).children().remove()
+				}
+			})
+		}
+	})
+})
