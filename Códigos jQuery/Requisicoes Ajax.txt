@@ -151,3 +151,21 @@ $('.list').on("click", function(e){
 		})
 	}			
 })
+//=============================================================================================================
+
+Prevenir multiplos requests de link
+
+var active = false
+$(".link").on("click",(function(e){
+	e.preventDefault()
+	var href = e.target.href
+	if(active) {return}
+	active = true
+	$.ajax({
+		url: href,
+	}).done(function() {
+		$("#janela").modal("show")
+		$("#conteudo").load(href)
+		return false
+	})	
+}))
