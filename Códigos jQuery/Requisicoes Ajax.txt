@@ -56,15 +56,19 @@ $(".class-link").on("click", (function(e) {
 
 Intervalo para requisição
 
-setInterval(function() {
-	$.ajax({
-    		type: "GET",
-    		url: "page.php",
-    		success: function(data) {
-			$('body').html(data);
-    		}
-	});
-}, 3000);
+$(function(){
+	var active = false
+	setInterval(function(){
+		if(active) {return}
+		active = true
+		$.ajax({
+			url: "main.php",
+		}).done(function(data) {
+			$("body").html(data)
+			return false
+		})
+	}, 3000)	
+});
     
 //=============================================================================================================
 
