@@ -173,3 +173,16 @@ $(".link").on("click",(function(e){
 		return false
 	})	
 }))
+//=============================================================================================================
+
+Form submit com dois botoes
+$("form button").click(function(e){
+	e.preventDefault()
+	$form = $(this).parent("form")
+	$.post($form.attr("action"), $form.serialize() + "&submit="+ $(this).attr("name"), function(data) {
+		$('#div').load('teste.php')
+		//Limpar os valores do modal
+		$('#modal form :input').val("");
+		return false;
+	})
+})
